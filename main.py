@@ -8,7 +8,7 @@ def show_task(tasks):
         print(f"{i}. [{mark}] {task["title"]}")
     print()
 
-def add_task():
+def add_task(tasks, title):
     """Task to be added"""
     title = title.strip()
     if title == "":
@@ -26,4 +26,6 @@ def delete_task():
 task = {"title" : "Buy Milk", "done" : False}
 tasks = [task, {"title" : "Read chapter 3", "done" : True}]
 
+show_task(tasks)
+add_task(tasks, "Buy a Lamborghini")
 show_task(tasks)

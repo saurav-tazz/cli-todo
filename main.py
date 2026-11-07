@@ -2,8 +2,15 @@ def view_task():
     """view task"""
 
 def show_task(tasks):
+    if not tasks:
+        print("Sorry your ToDo list is empty.")
+        print()
+        return
     print("ToDo List")
     for i, task in enumerate(tasks, start = 1):
+        task = task.strip()
+        if task == "":
+            continue
         mark = "x" if task["done"] else " "
         print(f"{i}. [{mark}] {task["title"]}")
     print()

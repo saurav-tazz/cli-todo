@@ -8,11 +8,11 @@ def show_task(tasks):
         return
     print("ToDo List")
     for i, task in enumerate(tasks, start = 1):
-        task = task.strip()
-        if task == "":
+        task["title"] = task["title"].strip()
+        if task["title"] == "":
             continue
         mark = "x" if task["done"] else " "
-        print(f"{i}. [{mark}] {task["title"]}")
+        print(f"{i}. [{mark}] {task['title']}")
     print()
 
 def add_task(tasks, title):
@@ -41,6 +41,17 @@ def get_int(prompt, low, high):
             else:
                 print(f"Select from {low} to {high}")
 
+def get_task():
+    title = input("Enter new task: ").strip()
+    if title == "":
+        print("Tasks cannot be empty")
+    elif len(title) > 200:
+        print("Maximum 200 Characters")
+    else:
+        return title
+
+
+
 def start_app():
     print("="*20)
     print("CLI TODO APP")
@@ -49,7 +60,8 @@ def start_app():
         print("1. Add\n2. View\n3. Quit")
         select = get_int("Enter option", 1, 3)
         if select == 1:
-            add_task(tasks, "Buy a Lamborghini")
+            title = get_task()
+            add_task(tasks, title)
         elif select == 2:
             show_task(tasks)
         elif select == 3:

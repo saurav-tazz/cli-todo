@@ -22,10 +22,33 @@ def mark_task():
 def delete_task():
     """delete task"""
 
+def get_int(prompt, low, high):
+    while True:
+        try:
+            option = int(input(f"{prompt} ({low}-{high}): "))
+        except ValueError:
+            print("Error: Expected a Number")
+        else:
+            if option in range(low, high + 1):
+                return option
+            else:
+                print(f"Select from {low} to {high}")
+
+def start_app():
+    print("="*20)
+    print("CLI TODO APP")
+    print("="*20)
+    while True:
+        print("1. Add\n2. View\n3. Quit")
+        select = get_int("Enter option", 1, 3)
+        if select == 1:
+            add_task(tasks, "Buy a Lamborghini")
+        elif select == 2:
+            show_task(tasks)
+        elif select == 3:
+            break
 
 task = {"title" : "Buy Milk", "done" : False}
 tasks = [task, {"title" : "Read chapter 3", "done" : True}]
 
-show_task(tasks)
-add_task(tasks, "Buy a Lamborghini")
-show_task(tasks)
+start_app()

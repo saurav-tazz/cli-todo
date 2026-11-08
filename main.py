@@ -8,7 +8,6 @@ def show_task(tasks):
         print(f"{i}. [{mark}] {task['title']}")
 
 def add_task(tasks, title):
-    """Task to be added"""
     title = title.strip()
     if title == "":
         raise ValueError("Cannot add an empty task.")
@@ -19,7 +18,7 @@ def add_task(tasks, title):
 def get_int(prompt, low, high):
     while True:
         try:
-            option = int(input(f"{prompt} {f'(1)' if low == high else f'({low}-{high})'}: "))
+            option = int(input(f"{prompt} {f'({low})' if low == high else f'({low}-{high})'}: "))
         except ValueError:
             print("Error: Expected a Number")
         else:
@@ -33,26 +32,23 @@ def get_task():
     return title
 
 def count_tasks(tasks):
-    count = 0
     if not tasks:
-        raise ValueError("Your ToDo list is empty")
-    for task in tasks:
-        count += 1
-    return count
+        raise ValueError("Sorry your ToDo list is empty.")
+    return len(tasks)
 
 def mark_task(tasks, number):
-    """add mark_task(tasks, number)"""
-    for i, task in enumerate(tasks, start = 1):
-        if i == number:
-            task["done"] = True
-            return
+    total = count_tasks(tasks)
+    if number not in range(1, total + 1):
+        raise ValueError(f"Select from 1 to {total}")
+
+    tasks[number - 1]["done"] = True
+    return
 
 def delete_task(tasks, number):
-    """Task to be deleted"""
-    for i, task in enumerate(tasks, start = 1):
-        if i == number:
-            tasks.remove(task)
-            return
+    total = count_tasks(tasks)
+    if number not in range(1, total + 1):
+        raise ValueError(f"Select from 1 to {total}")
+    tasks.pop(number - 1)
     
 
 def start_app():
@@ -71,32 +67,44 @@ def start_app():
                 print("\nTask Added Successfully!!!\n")
             except ValueError as e:
                 print(e)
+
         elif select == 2:
             show_task(tasks)
+
         elif select == 3:
-            '''mark task'''
             try:
                 total = count_tasks(tasks)
-            except ValueError as e:
-                print(e)
-            else:
                 show_task(tasks)
                 number = get_int("Enter the task you want to mark", 1, total)
                 mark_task(tasks, number)
                 print("Marked Task Done.")
-
-        elif select == 4:
-            '''delete'''
-            try:
-                total = count_tasks(tasks)
             except ValueError as e:
                 print(e)
-            else:
+            
+        elif select == 4:
+            try:
+                total = count_tasks(tasks)
                 show_task(tasks)
                 number = get_int("Enter the task you want to delete", 1, total)
                 delete_task(tasks, number)
                 print("Deleted Task.")
-        else:
+            except ValueError as e:
+                print(e)
+
+        elif select == 5:
             break
+
+
+
+t = [
+    {"title": "a", "done": False},
+    {"title": "b", "done": False},
+    {"title": "c", "done": False},
+]
+try:
+    mark_task(t, 2)
+    print(t)
+except ValueError as e:
+    print(e)
 
 start_app()

@@ -7,8 +7,10 @@ A small command-line to-do list written in Python. It is my first project built 
 - Add a task (the title is trimmed, cannot be empty, maximum 200 characters)
 - View all tasks with a done / not done marker
 - Menu input is validated, so typing a letter or an out-of-range number does not crash the program
+- Mark a task as done, works only if there is a task in the list. Trying to mark in am empty list does not crash the program but returns to the menu with a message
+- Deleting a task. works same as marking the file.
 
-**In progress:** mark a task as done, delete a task, save tasks to a file.
+**In progress:** save tasks to a file.
 
 ## Requirements
 

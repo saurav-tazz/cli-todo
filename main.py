@@ -39,6 +39,7 @@ def get_task():
     title = input("Enter new task: ")
     if title == "":
         print("Tasks cannot be empty")
+        return ""
     elif len(title) > 200:
         print("Maximum 200 Characters")
     else:

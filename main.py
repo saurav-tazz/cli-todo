@@ -38,6 +38,20 @@ def get_task():
     title = input("Enter new task: ")
     return title
 
+def count_tasks(tasks):
+    count = 0
+    if not tasks:
+        raise ValueError("Your ToDo list is empty")
+    for task in tasks:
+        count += 1
+    return count
+
+def mark_task(tasks, number):
+    """add mark_task(tasks, number)"""
+    for i, task in enumerate(tasks, start = 1):
+        if i == number:
+            task["done"] = True
+            return
 
 
 def start_app():
@@ -47,8 +61,8 @@ def start_app():
     print("="*20)
     while True:
         print("\nMenu")
-        print("1. Add\n2. View\n3. Quit")
-        select = get_int("Enter option", 1, 3)
+        print("1. Add\n2. View\n3. Mark\n4. Delete\n5. Quit")
+        select = get_int("Enter option", 1, 5)
         if select == 1:
             title = get_task()
             try:
@@ -59,7 +73,26 @@ def start_app():
         elif select == 2:
             show_task(tasks)
         elif select == 3:
+            '''mark task'''
+            try:
+                total = count_tasks(tasks)
+            except ValueError as e:
+                print(e)
+            else:
+                number = get_int("Enter the task you want to mark", 1, total)
+                mark_task(tasks, number)
+                print("Marked Task Done.")
+
+        elif select == 4:
+            '''delete'''
+        else:
             break
 
+# try:
+#     total = count_tasks([{"title": "title", "done": False}, {}, {}, {}])
+# except ValueError as e:
+#     print(e)
+# else:
+#     print(total)
 
 start_app()

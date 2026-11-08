@@ -94,17 +94,4 @@ def start_app():
         elif select == 5:
             break
 
-
-
-t = [
-    {"title": "a", "done": False},
-    {"title": "b", "done": False},
-    {"title": "c", "done": False},
-]
-try:
-    mark_task(t, 2)
-    print(t)
-except ValueError as e:
-    print(e)
-
 start_app()

@@ -16,12 +16,6 @@ def add_task(tasks, title):
         raise ValueError("Maximum 200 Characters")
     tasks.append({"title": title, "done": False})
 
-def mark_task():
-    """mark task"""
-
-def delete_task():
-    """delete task"""
-
 def get_int(prompt, low, high):
     while True:
         try:

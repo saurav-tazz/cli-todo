@@ -25,7 +25,7 @@ def delete_task():
 def get_int(prompt, low, high):
     while True:
         try:
-            option = int(input(f"{prompt} ({low}-{high}): "))
+            option = int(input(f"{prompt} {f'(1)' if low == high else f'({low}-{high})'}: "))
         except ValueError:
             print("Error: Expected a Number")
         else:
@@ -53,6 +53,13 @@ def mark_task(tasks, number):
             task["done"] = True
             return
 
+def delete_task(tasks, number):
+    """Task to be deleted"""
+    for i, task in enumerate(tasks, start = 1):
+        if i == number:
+            tasks.remove(task)
+            return
+    
 
 def start_app():
     tasks = []
@@ -79,20 +86,23 @@ def start_app():
             except ValueError as e:
                 print(e)
             else:
+                show_task(tasks)
                 number = get_int("Enter the task you want to mark", 1, total)
                 mark_task(tasks, number)
                 print("Marked Task Done.")
 
         elif select == 4:
             '''delete'''
+            try:
+                total = count_tasks(tasks)
+            except ValueError as e:
+                print(e)
+            else:
+                show_task(tasks)
+                number = get_int("Enter the task you want to delete", 1, total)
+                delete_task(tasks, number)
+                print("Deleted Task.")
         else:
             break
-
-# try:
-#     total = count_tasks([{"title": "title", "done": False}, {}, {}, {}])
-# except ValueError as e:
-#     print(e)
-# else:
-#     print(total)
 
 start_app()

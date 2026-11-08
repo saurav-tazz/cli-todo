@@ -1,6 +1,3 @@
-def view_task():
-    """view task"""
-
 def show_task(tasks):
     if not tasks:
         print("Sorry your ToDo list is empty.")
@@ -8,9 +5,6 @@ def show_task(tasks):
         return
     print("ToDo List")
     for i, task in enumerate(tasks, start = 1):
-        task["title"] = task["title"].strip()
-        if task["title"] == "":
-            continue
         mark = "x" if task["done"] else " "
         print(f"{i}. [{mark}] {task['title']}")
     print()
@@ -42,7 +36,7 @@ def get_int(prompt, low, high):
                 print(f"Select from {low} to {high}")
 
 def get_task():
-    title = input("Enter new task: ").strip()
+    title = input("Enter new task: ")
     if title == "":
         print("Tasks cannot be empty")
     elif len(title) > 200:
@@ -53,6 +47,7 @@ def get_task():
 
 
 def start_app():
+    tasks = []
     print("="*20)
     print("CLI TODO APP")
     print("="*20)
@@ -67,7 +62,5 @@ def start_app():
         elif select == 3:
             break
 
-task = {"title" : "Buy Milk", "done" : False}
-tasks = [task, {"title" : "Read chapter 3", "done" : True}]
 
 start_app()

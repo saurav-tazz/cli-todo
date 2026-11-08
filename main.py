@@ -11,7 +11,6 @@ def show_task(tasks):
 
 def add_task(tasks, title):
     """Task to be added"""
-    title = title.strip()
     if title == "":
         print("Cannot add an empty task.")
     else:
@@ -36,12 +35,12 @@ def get_int(prompt, low, high):
                 print(f"Select from {low} to {high}")
 
 def get_task():
-    title = input("Enter new task: ")
+    title = input("Enter new task: ").strip()
     if title == "":
-        print("Tasks cannot be empty")
         return ""
     elif len(title) > 200:
         print("Maximum 200 Characters")
+        return 
     else:
         return title
 
@@ -57,6 +56,8 @@ def start_app():
         select = get_int("Enter option", 1, 3)
         if select == 1:
             title = get_task()
+            if title is None:
+                continue
             add_task(tasks, title)
         elif select == 2:
             show_task(tasks)

@@ -1,20 +1,20 @@
 def show_task(tasks):
     if not tasks:
         print("Sorry your ToDo list is empty.")
-        print()
         return
     print("ToDo List")
     for i, task in enumerate(tasks, start = 1):
         mark = "x" if task["done"] else " "
         print(f"{i}. [{mark}] {task['title']}")
-    print()
 
 def add_task(tasks, title):
     """Task to be added"""
+    title = title.strip()
     if title == "":
-        print("Cannot add an empty task.")
-    else:
-        tasks.append({"title": title, "done": False})
+        raise ValueError("Cannot add an empty task.")
+    elif len(title) > 200:
+        raise ValueError("Maximum 200 Characters")
+    tasks.append({"title": title, "done": False})
 
 def mark_task():
     """mark task"""
@@ -35,14 +35,8 @@ def get_int(prompt, low, high):
                 print(f"Select from {low} to {high}")
 
 def get_task():
-    title = input("Enter new task: ").strip()
-    if title == "":
-        return ""
-    elif len(title) > 200:
-        print("Maximum 200 Characters")
-        return 
-    else:
-        return title
+    title = input("Enter new task: ")
+    return title
 
 
 
@@ -52,13 +46,16 @@ def start_app():
     print("CLI TODO APP")
     print("="*20)
     while True:
+        print("\nMenu")
         print("1. Add\n2. View\n3. Quit")
         select = get_int("Enter option", 1, 3)
         if select == 1:
             title = get_task()
-            if title is None:
-                continue
-            add_task(tasks, title)
+            try:
+                add_task(tasks, title)
+                print("\nTask Added Successfully!!!\n")
+            except ValueError as e:
+                print(e)
         elif select == 2:
             show_task(tasks)
         elif select == 3:

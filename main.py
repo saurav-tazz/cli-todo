@@ -1,3 +1,5 @@
+import json
+
 def show_task(tasks):
     if not tasks:
         print("Sorry your ToDo list is empty.")
@@ -42,17 +44,31 @@ def mark_task(tasks, number):
         raise ValueError(f"Select from 1 to {total}")
 
     tasks[number - 1]["done"] = True
-    return
 
 def delete_task(tasks, number):
     total = count_tasks(tasks)
     if number not in range(1, total + 1):
         raise ValueError(f"Select from 1 to {total}")
     tasks.pop(number - 1)
-    
 
-def start_app():
-    tasks = []
+def save_tasks(tasks, filename = "tasks.json"):
+    with open(filename, "w", encoding = "utf-8") as f:
+        json.dump(tasks, f)
+
+def load_tasks(filename = "tasks.json"):
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            loaded = json.load(f)
+        return loaded
+    except FileNotFoundError:
+        return []
+    
+def start_app(filename):
+    try:
+        tasks = load_tasks(filename)
+    except ValueError:
+        print(f"Error: {filename} is damaged and could not be read.\nFix the file or delete it, then run the program again")
+        return
     print("="*20)
     print("CLI TODO APP")
     print("="*20)
@@ -64,7 +80,9 @@ def start_app():
             title = get_task()
             try:
                 add_task(tasks, title)
+                save_tasks(tasks, filename)
                 print("\nTask Added Successfully!!!\n")
+                
             except ValueError as e:
                 print(e)
 
@@ -77,7 +95,9 @@ def start_app():
                 show_task(tasks)
                 number = get_int("Enter the task you want to mark", 1, total)
                 mark_task(tasks, number)
-                print("Marked Task Done.")
+                save_tasks(tasks, filename)
+                print("\nMarked Task Done!!!")
+                
             except ValueError as e:
                 print(e)
             
@@ -87,11 +107,13 @@ def start_app():
                 show_task(tasks)
                 number = get_int("Enter the task you want to delete", 1, total)
                 delete_task(tasks, number)
-                print("Deleted Task.")
+                save_tasks(tasks, filename)
+                print("\nDeleted Task!!!")
+                
             except ValueError as e:
                 print(e)
 
         elif select == 5:
             break
 
-start_app()
+start_app("tasks.json")

@@ -9,8 +9,8 @@ def show_task(tasks):
         mark = "x" if task["done"] else " "
         print(f"{i}. [{mark}] {task['title']}")
 
-def add_task(tasks, title):
-    title = title.strip()
+def add_task(tasks):
+    title = input("Enter new task: ").strip()
     if title == "":
         raise ValueError("Cannot add an empty task.")
     elif len(title) > 200:
@@ -28,10 +28,6 @@ def get_int(prompt, low, high):
                 return option
             else:
                 print(f"Select from {low} to {high}")
-
-def get_task():
-    title = input("Enter new task: ")
-    return title
 
 def count_tasks(tasks):
     if not tasks:
@@ -77,9 +73,8 @@ def start_app(filename):
         print("1. Add\n2. View\n3. Mark\n4. Delete\n5. Quit")
         select = get_int("Enter option", 1, 5)
         if select == 1:
-            title = get_task()
             try:
-                add_task(tasks, title)
+                add_task(tasks)
                 save_tasks(tasks, filename)
                 print("\nTask Added Successfully!!!\n")
                 
